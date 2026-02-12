@@ -8,6 +8,10 @@ html, body {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  /* background: #f8f9fb; */
+  background-image: url("https://jooinn.com/images/grey-background-1.png");
+  min-height: 100vh;
+
 }
 
 .header,
@@ -25,53 +29,54 @@ html, body {
   background: #eee;
 }
 
+.card-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+
 /* home page grid - this is all from AI */
 .grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding-inline: clamp(1rem, 12vw, 28rem);
-
-
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Card sizing magic */
+
 .card {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 300px; /* grow | shrink | base width */
-  max-width: calc(33.333% - 1rem); /* desktop */
-  background: white;
-  border-radius: 8px;
+  background: #ffffff;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 1px solid #eaeaea;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Image area */
-.card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
 }
 
-/* Text */
+
 .card-body {
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
-@media (max-width: 1024px) {
-  .card {
-    max-width: calc(50% - 1rem); /* tablet */
-  }
+.card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.3;
 }
 
-@media (max-width: 600px) {
-  .card {
-    max-width: 100%; /* mobile */
-  }
-
-  .card img {
-    height: 180px;
-  }
+.card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #6b7280;
+  margin: 0;
 }
 

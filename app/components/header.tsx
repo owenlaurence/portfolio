@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -5,7 +6,8 @@ export default function Header() {
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
         <span style={{ fontSize: "large" }}>First Last</span>
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", width: "10rem" }}>
-          <span ><u>About</u></span>
+          <span><u><Link style={{ color: "white" }} href={"/"}>Home</Link></u></span>
+          <span><u><Link style={{ color: "white" }} href={"/about"}>About</Link></u></span>
           <span ><u>GitHub</u></span>
         </div>
       </div>
