@@ -11,7 +11,7 @@ type TopicProps = {
   description: string
   steps?: string[];
   businessValue: string
-  tags: string[]
+  tags: Tag[]
   metrics: ImpactMetric[]
   technologies: string[],
   challenges: string[]
@@ -21,6 +21,11 @@ type TopicProps = {
 type ImpactMetric = {
   description: string
   icon: JSX.Element
+}
+
+type Tag = {
+  text : string
+  color: string
 }
 
 
@@ -60,9 +65,9 @@ export default function TopicTemplate({ topic, description, steps, businessValue
               {/* Tags and Difficulty */}
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 {tags.map((tag, i) => {
-                  return <span key={"tag_" + i} className={`inline-flex items-center gap-1 px-3 py-1 bg-${colors[i]}-100 text-${colors[i]}-700 rounded-full text-sm`}>
+                  return <span key={"tag_" + i} className={`inline-flex items-center gap-1 px-3 py-1 bg-${tag.color}-100 text-${tag.color}-700 rounded-full text-sm`}>
                     <Tag className="size-3" />
-                    {tag}
+                    {tag.text}
                   </span>
                 })
 

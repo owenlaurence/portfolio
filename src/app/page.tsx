@@ -18,7 +18,7 @@ export default function App() {
 
   {
     subject: "capacitor-intro",
-    title: "Rethinking mobile apps with a single React codebase",
+    title: "Implementing CI/CD Pipeline with GitHub Actions",
     image: "https://capacitorjs.com/og.png",
     description: "One codebase. Real native APIs. No more re-implementing."
   },

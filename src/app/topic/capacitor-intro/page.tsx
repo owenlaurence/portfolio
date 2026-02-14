@@ -16,7 +16,20 @@ const topic = {
     "Monitor workflow runs and optimize for faster execution"
   ],
   businessValue: "Implementing a CI/CD pipeline reduces manual deployment errors by 80%, decreases time-to-market by enabling multiple daily deployments instead of weekly releases, and frees up developer time by automating repetitive tasks. This translates to faster feature delivery, improved product quality, and reduced operational costs.",
-  tags: ["DevOps", "Automation", "CI/CD"],
+  tags: [
+    {
+      text: "DevOps",
+      color: "blue"
+    },
+    {
+      text: "Automation",
+      color: "green"
+    },
+    {
+      text: "CI/CD",
+      color: "purple"
+    }
+  ],
   technologies: ["GitHub Actions", "Docker", "YAML", "Node.js", "Jest", "AWS", "Terraform"],
   challenges: ["Manual deployment bottlenecks", "Inconsistent environment configurations", "Lack of automated testing", "Limited deployment visibility"],
   metrics: [
@@ -30,7 +43,7 @@ const topic = {
     },
     {
       description: "Developer productivity increased by 40%",
-      icon: <Zap className={`size-6 text-purple-600`}/>,
+      icon: <Zap className={`size-6 text-purple-600`} />,
     }
 
   ]
