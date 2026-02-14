@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import { Clock, Calendar, Tag, CheckCircle2, AlertCircle, Zap, Code2, GitBranch, Award, TrendingUp, Users } from 'lucide-react';
+import { JSX } from 'react';
 
 type TopicProps = {
   topic: string
@@ -11,16 +12,23 @@ type TopicProps = {
   steps?: string[];
   businessValue: string
   tags: string[]
-  
+  metrics: ImpactMetric[]
+  technologies: string[],
+  challenges: string[]
 
 }
 
+type ImpactMetric = {
+  description: string
+  icon: JSX.Element
+}
 
-export default function TopicTemplate({ topic, description, steps, businessValue, tags }: TopicProps) {
+
+export default function TopicTemplate({ topic, description, steps, businessValue, tags, metrics, technologies, challenges }: TopicProps) {
 
   const [activeTab, setActiveTab] = useState('description');
 
-  const colors = [ "blue", "green", "purple" ]
+  const colors = ["blue", "green", "purple"]
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -53,9 +61,9 @@ export default function TopicTemplate({ topic, description, steps, businessValue
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 {tags.map((tag, i) => {
                   return <span key={"tag_" + i} className={`inline-flex items-center gap-1 px-3 py-1 bg-${colors[i]}-100 text-${colors[i]}-700 rounded-full text-sm`}>
-                  <Tag className="size-3" />
-                  {tag}
-                </span>
+                    <Tag className="size-3" />
+                    {tag}
+                  </span>
                 })
 
                 }
@@ -66,24 +74,27 @@ export default function TopicTemplate({ topic, description, steps, businessValue
             {/* Tabs Section */}
             <div className="bg-white rounded-lg shadow-sm p-8">
               <Tabs.Root value={activeTab} onValueChange={setActiveTab}>
-                <Tabs.List className="flex gap-2 border-b border-gray-200 mb-6">
+                <Tabs.List className="flex gap-2 border-b border-gray-200 mb-6 overflow-x-auto whitespace-nowrap">
                   <Tabs.Trigger
                     value="description"
                     className="px-4 py-2 border-b-2 transition-colors data-[state=active]:border-blue-600 data-[state=inactive]:border-transparent data-[state=inactive]:text-gray-600 hover:text-gray-900"
                   >
-                    Description
+                    <span className="sm:hidden">About</span>
+                    <span className="hidden sm:inline">Description</span>
                   </Tabs.Trigger>
                   <Tabs.Trigger
                     value="steps"
                     className="px-4 py-2 border-b-2 transition-colors data-[state=active]:border-blue-600 data-[state=inactive]:border-transparent data-[state=inactive]:text-gray-600 hover:text-gray-900"
                   >
-                    Steps to Accomplish
+                    <span className="sm:hidden">Steps</span>
+                    <span className="hidden sm:inline">Steps to Accomplish</span>
                   </Tabs.Trigger>
                   <Tabs.Trigger
                     value="value"
                     className="px-4 py-2 border-b-2 transition-colors data-[state=active]:border-blue-600 data-[state=inactive]:border-transparent data-[state=inactive]:text-gray-600 hover:text-gray-900"
                   >
-                    Business Value
+                    <span className="sm:hidden">Value</span>
+                    <span className="hidden sm:inline">Business Value</span>
                   </Tabs.Trigger>
                 </Tabs.List>
 
@@ -111,13 +122,10 @@ export default function TopicTemplate({ topic, description, steps, businessValue
             <div className="bg-white rounded-lg shadow-sm p-8 mt-6">
               <h3 className="text-xl mb-4">Technologies & Tools</h3>
               <div className="flex flex-wrap gap-3">
-                <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">GitHub Actions</span>
-                <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">Docker</span>
-                <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">YAML</span>
-                <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">Node.js</span>
-                <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">Jest</span>
-                <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">AWS</span>
-                <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">Terraform</span>
+                {technologies.map((tech, i) => (
+                  <span key={`tech-${i}`} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">{tech}</span>
+                ))}
+
               </div>
             </div>
           </div>
@@ -143,30 +151,18 @@ export default function TopicTemplate({ topic, description, steps, businessValue
             <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
               <h3 className="text-sm uppercase tracking-wide text-gray-500 mb-4">Impact Metrics</h3>
               <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <TrendingUp className="size-5 text-blue-600" />
+                {metrics.map((metric, i) => {
+                  return <div key={`metric-${i}`} className="flex items-start gap-3">
+                    <div className={`p-2 bg-100 rounded-lg`}>
+                      {metric.icon}
+                    </div>
+                    <div>
+                      <div className="text">{metric.description}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-sm">Deployment frequency increased from weekly to daily</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-green-100 rounded-lg">
-                    <CheckCircle2 className="size-5 text-green-600" />
-                  </div>
-                  <div>
-                    <div className="text-sm">Mean time to recovery reduced by 60%</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-purple-100 rounded-lg">
-                    <Zap className="size-5 text-purple-600" />
-                  </div>
-                  <div>
-                    <div className="text-sm">Developer productivity increased by 40%</div>
-                  </div>
-                </div>
+                })
+
+                }
               </div>
             </div>
 
@@ -174,22 +170,15 @@ export default function TopicTemplate({ topic, description, steps, businessValue
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-sm uppercase tracking-wide text-gray-500 mb-4">Key Challenges Solved</h3>
               <ul className="space-y-3 text-sm text-gray-700">
-                <li className="flex gap-2">
-                  <span className="text-blue-600 shrink-0">•</span>
-                  <span>Manual deployment bottlenecks</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-blue-600 shrink-0">•</span>
-                  <span>Inconsistent environment configurations</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-blue-600 shrink-0">•</span>
-                  <span>Lack of automated testing</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-blue-600 shrink-0">•</span>
-                  <span>Limited deployment visibility</span>
-                </li>
+                {challenges.map((challenge, i) => (
+                  <li key={`challenge-${i}`} className="flex gap-2">
+                    <span className="text-blue-600 shrink-0">•</span>
+                    <span>{challenge}</span>
+                  </li>
+
+                ))
+
+                }
               </ul>
             </div>
           </div>
