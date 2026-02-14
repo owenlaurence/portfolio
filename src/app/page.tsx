@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 type FeatOfStrength = {
   subject : string,
@@ -37,7 +38,7 @@ export default function App() {
   },
 
   {
-    subject: "server-sideNext",
+    subject: "server-side-next",
     title: "Where security finally clicked for me in Next.js",
     image: "https://miro.medium.com/1*1itDSqxMNCT_XMksG99r-A.png",
     description: "Server-side rendering isn't just about speed. It provides the security React always needed."
@@ -51,18 +52,21 @@ export default function App() {
       <main className="main">
         <div className="grid">
           {featsOfStrength.map((feat, i) => (
-            <div className="card" key={i}>
+            <Link
+              href={`/topic/${feat.subject}`}
+              key={i}
+              className="card"
+            >
               <img
                 src={feat.image}
                 alt={feat.title}
                 className="card-image"
               />
-
               <div className="card-body">
                 <h3>{feat.title}</h3>
                 <p>{feat.description}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 html, body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   height: 100%;
@@ -9,7 +11,6 @@ html, body {
   display: flex;
   flex-direction: column;
   /* background: #f8f9fb; */
-  background-image: url("https://jooinn.com/images/grey-background-1.png");
   min-height: 100vh;
 
 }
