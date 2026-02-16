@@ -4,6 +4,7 @@ import { useState } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import { Clock, Calendar, Tag, CheckCircle2, AlertCircle, Zap, Code2, GitBranch, Award, TrendingUp, Users } from 'lucide-react';
 import { JSX } from 'react';
+import { getTagColor } from '@/src/styles/util/colors';
 
 type TopicProps = {
   topic: string
@@ -50,12 +51,9 @@ export default function TopicTemplate({ topic, description, steps, businessValue
                   <span>February 2026</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Users className="size-4" />
-                  <span>Team of 5</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Award className="size-4" />
-                  <span>Lead Developer</span>
+                  {/* <Users className="size-4" /> */}
+                  <Calendar className="size-4"/>
+                  <span>1 week</span>
                 </div>
               </div>
 
@@ -65,7 +63,7 @@ export default function TopicTemplate({ topic, description, steps, businessValue
               {/* Tags and Difficulty */}
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 {tags.map((tag, i) => {
-                  return <span key={"tag_" + i} className={`inline-flex items-center gap-1 px-3 py-1 bg-${tag.color}-100 text-${tag.color}-700 rounded-full text-sm`}>
+                  return <span key={"tag_" + i} className={`inline-flex items-center gap-1 px-3 py-1 ${getTagColor(tag.color)} rounded-full text-sm`}>
                     <Tag className="size-3" />
                     {tag.text}
                   </span>
