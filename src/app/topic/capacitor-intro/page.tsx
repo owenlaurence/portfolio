@@ -1,6 +1,7 @@
 import TopicTemplate from "@/src/app/components/topic/template";
 import { color } from "framer-motion";
 import { CheckCircle2, TrendingUp, Zap } from "lucide-react";
+import LoadingSkeleton from "../loading";
 
 /*
     * runs-on: The OS on which we want to run our server. Ubuntu is most common, but you may select whichever platform works best for your application. 
@@ -11,7 +12,7 @@ import { CheckCircle2, TrendingUp, Zap } from "lucide-react";
 const topic = {
   topic: "Implementing CI/CD Pipeline with GitHub Actions",
   subject: "capacitor-intro",
-  description: `### Continuous Integration and Continuous Deployment 
+  description: `### Continuous Integration and Continuous Deployment  
   Automated pipelines accelerate the process of testing, building, and deploying code changes. Using GitHub Actions, teams can create workflows that automatically run tests, build applications, and deploy to production environments whenever code is pushed to the repository.  
     
   Lets say we have a typical npm application. To run our application, we run the commands:
@@ -103,4 +104,5 @@ const topic = {
 
 export default function CapacitorIntro() {
   return <TopicTemplate {...topic} />
+  // return <LoadingSkeleton/>
 }
