@@ -5,6 +5,11 @@ import * as Tabs from '@radix-ui/react-tabs';
 import { Clock, Calendar, Tag, CheckCircle2, AlertCircle, Zap, Code2, GitBranch, Award, TrendingUp, Users } from 'lucide-react';
 import { JSX } from 'react';
 import { getTagColor } from '@/src/styles/util/colors';
+import ReactMarkdown from 'react-markdown';
+import {Light as SyntaxHighlighter} from 'react-syntax-highlighter'
+import remarkGfm from 'remark-gfm';
+import "./markdown.css"
+import rehypeRaw from 'rehype-raw';
 
 type TopicProps = {
   topic: string
@@ -25,7 +30,7 @@ type ImpactMetric = {
 }
 
 type Tag = {
-  text : string
+  text: string
   color: string
 }
 
@@ -34,14 +39,12 @@ export default function TopicTemplate({ topic, description, steps, businessValue
 
   const [activeTab, setActiveTab] = useState('description');
 
-  const colors = ["blue", "green", "purple"]
-
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto p-8">
+      <div className="max-w-7xl mx-auto p-4 pb-0">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
             {/* Header Section */}
             <div className="bg-white rounded-lg shadow-sm p-8 mb-6">
               {/* Meta Info */}
@@ -52,7 +55,7 @@ export default function TopicTemplate({ topic, description, steps, businessValue
                 </div>
                 <div className="flex items-center gap-2">
                   {/* <Users className="size-4" /> */}
-                  <Calendar className="size-4"/>
+                  <Calendar className="size-4" />
                   <span>1 week</span>
                 </div>
               </div>
@@ -74,8 +77,87 @@ export default function TopicTemplate({ topic, description, steps, businessValue
 
             </div>
 
+            {/* Mobile Swipeable Cards */}
+            <div className="md:hidden lg:hidden col-span-1 bg-gray-50 px-2 ">
+              <div className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-10 -mx-4 px-4">
+
+                {/* Project Details Card */}
+                <div className="min-w-[85%] snap-center bg-white rounded-2xl border border-gray-200 shadow-xl transform transition-transform duration-500 ease-in-out p-6 scale-95 first:scale-105 last:scale-105">
+                  <div className="mb-5">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-gray-600">
+                      Project Details
+                    </h3>
+                    <div className="h-1 w-12 bg-blue-600 rounded-full mt-3"></div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div>
+                      <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
+                        My Role
+                      </div>
+                      <div className="text-sm font-semibold text-gray-900">
+                        Lead Developer & DevOps Engineer
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
+                        Team Size
+                      </div>
+                      <div className="text-sm font-semibold text-gray-900">
+                        5 engineers
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Impact Metrics Card */}
+                <div className="min-w-[85%] snap-center bg-white rounded-2xl border border-gray-200 shadow-xl transform transition-transform duration-500 ease-in-out p-6 scale-95 first:scale-105 last:scale-105">
+                  <div className="mb-5">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-gray-600">
+                      Impact Metrics
+                    </h3>
+                    <div className="h-1 w-12 bg-blue-600 rounded-full mt-3"></div>
+                  </div>
+
+                  <div className="space-y-6">
+                    {metrics.map((metric, i) => (
+                      <div key={`metric-mobile-${i}`} className="flex items-start gap-4">
+                        <div className="p-3 rounded-xl bg-blue-50 border border-blue-100 shadow-sm">
+                          {metric.icon}
+                        </div>
+                        <div className="text-sm text-gray-800 leading-relaxed">
+                          {metric.description}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Key Challenges Card */}
+                <div className="min-w-[85%] snap-center bg-white rounded-2xl border border-gray-200 shadow-xl transform transition-transform duration-500 ease-in-out p-6 scale-95 first:scale-105 last:scale-105">
+                  <div className="mb-5">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-gray-600">
+                      Key Challenges Solved
+                    </h3>
+                    <div className="h-1 w-12 bg-blue-600 rounded-full mt-3"></div>
+                  </div>
+
+                  <ul className="space-y-4 text-sm text-gray-800">
+                    {challenges.map((challenge, i) => (
+                      <li key={`challenge-mobile-${i}`} className="flex gap-3">
+                        <span className="text-blue-600 mt-[6px] text-base shrink-0">•</span>
+                        <span className="leading-relaxed">{challenge}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+
             {/* Tabs Section */}
-            <div className="bg-white rounded-lg shadow-sm p-8">
+            <div className="bg-white rounded-lg shadow-sm p-4">
               <Tabs.Root value={activeTab} onValueChange={setActiveTab}>
                 <Tabs.List className="flex gap-2 border-b border-gray-200 mb-6 overflow-x-auto whitespace-nowrap">
                   <Tabs.Trigger
@@ -101,8 +183,16 @@ export default function TopicTemplate({ topic, description, steps, businessValue
                   </Tabs.Trigger>
                 </Tabs.List>
 
+
+                {/* MARKDOWN */}
                 <Tabs.Content value="description" className="py-4">
-                  <p className="text-gray-700 leading-relaxed">{description}</p>
+                  <div className="not-prose markdown-reset  max-w-none ">
+                    <ReactMarkdown
+                      rehypePlugins={[rehypeRaw]}
+                    >
+                    {description}
+                    </ReactMarkdown>
+                  </div>
                 </Tabs.Content>
 
                 <Tabs.Content value="steps" className="py-4">
@@ -131,10 +221,17 @@ export default function TopicTemplate({ topic, description, steps, businessValue
 
               </div>
             </div>
+ 
+
+
+            
+
+            
           </div>
 
+
           {/* Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="hidden md:block lg:col-span-1">
             {/* Project Context */}
             <div className="bg-white rounded-lg shadow-sm p-6 mb-6 sticky top-8">
               <h3 className="text-sm uppercase tracking-wide text-gray-500 mb-4">Project Details</h3>

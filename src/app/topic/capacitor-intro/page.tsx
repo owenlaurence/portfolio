@@ -2,11 +2,61 @@ import TopicTemplate from "@/src/app/components/topic/template";
 import { color } from "framer-motion";
 import { CheckCircle2, TrendingUp, Zap } from "lucide-react";
 
+/*
+    * runs-on: The OS on which we want to run our server. Ubuntu is most common, but you may select whichever platform works best for your application. 
+        * For example: Checkout [my automated CI/CD for full iOS App Store delivery](./capacitor-plugin).
+*/
+
 
 const topic = {
   topic: "Implementing CI/CD Pipeline with GitHub Actions",
   subject: "capacitor-intro",
-  description: "A Continuous Integration and Continuous Deployment (CI/CD) pipeline automates the process of testing, building, and deploying code changes. Using GitHub Actions, teams can create workflows that automatically run tests, build applications, and deploy to production environments whenever code is pushed to the repository.",
+  description: `### Continuous Integration and Continuous Deployment 
+  Automated pipelines accelerate the process of testing, building, and deploying code changes. Using GitHub Actions, teams can create workflows that automatically run tests, build applications, and deploy to production environments whenever code is pushed to the repository.  
+    
+  Lets say we have a typical npm application. To run our application, we run the commands:
+  ~~~bash
+    npm install
+    npm test
+    npm run build
+    npm run dev
+
+  ~~~
+
+  These scripts build our code and serve the content to a location available to us. Here's the equivalent yaml configuration:
+  ~~~yml
+    name: Deploy NPM
+
+    on:
+      ...
+
+    jobs:
+      build-and-test:
+        runs-on: ubuntu-latest
+
+        steps:
+          ...
+
+          - name: Set up Node.js
+            uses: actions/setup-node@v4
+            with:
+              node-version: 22
+
+          - name: Install dependencies
+            run: npm install
+
+          - name: Run tests
+            run: npm test
+
+          - name: Build project
+            run: npm run build
+
+
+  ~~~
+
+    Now lets break down what we have here  
+    ...
+  `,
   steps: [
     "Create a .github/workflows directory in your repository",
     "Define a YAML workflow file with trigger events (push, pull_request, etc.)",
