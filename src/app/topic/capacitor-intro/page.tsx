@@ -6,17 +6,22 @@ import LoadingSkeleton from "../loading";
 /*
     * runs-on: The OS on which we want to run our server. Ubuntu is most common, but you may select whichever platform works best for your application. 
         * For example: Checkout [my automated CI/CD for full iOS App Store delivery](./capacitor-plugin).
+    
+  <div style="padding:5px; border-left:4px solid #0969da; background:#f6f8fa;">
+  <strong>Note:</strong> 
+  </div>
 */
 
 
 const topic = {
   topic: "Implementing CI/CD Pipeline with GitHub Actions",
   subject: "capacitor-intro",
-  description: `### Continuous Integration and Continuous Deployment  
+  description:
+    `### Continuous Integration and Continuous Deployment  
   Automated pipelines accelerate the process of testing, building, and deploying code changes. Using GitHub Actions, teams can create workflows that automatically run tests, build applications, and deploy to production environments whenever code is pushed to the repository.  
     
-  Lets say we have a typical npm application. To run our application, we run the commands:
-  ~~~bash
+  Lets say we have a React application. To run our application, we run the commands:
+  ~~~sh
     npm install
     npm test
     npm run build
@@ -53,10 +58,13 @@ const topic = {
             run: npm run build
 
 
+
   ~~~
 
-    Now lets break down what we have here  
-    ...
+  When we run this in GitHub, the result is a ubuntu image which has our application downloaded and built.
+
+  Ubuntu is most common, but you may use whichever platform is best for your application. For example: checkout [my automated CI/CD for full iOS delivery](./capacitor-plugin).
+
   `,
   steps: [
     "Create a .github/workflows directory in your repository",

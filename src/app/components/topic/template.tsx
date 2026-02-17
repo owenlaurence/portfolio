@@ -5,11 +5,16 @@ import * as Tabs from '@radix-ui/react-tabs';
 import { Clock, Calendar, Tag, CheckCircle2, AlertCircle, Zap, Code2, GitBranch, Award, TrendingUp, Users } from 'lucide-react';
 import { JSX } from 'react';
 import { getTagColor } from '@/src/styles/util/colors';
-import ReactMarkdown from 'react-markdown';
-import {Light as SyntaxHighlighter} from 'react-syntax-highlighter'
+// import ReactMarkdown from 'react-markdown';
+import Markdown from 'react-markdown';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import remarkGfm from 'remark-gfm';
 import "./markdown.css"
 import rehypeRaw from 'rehype-raw';
+import {lucario} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { a11yDark, agate, dark, kimbieLight, lightfair } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { a11yLight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { prism } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 type TopicProps = {
   topic: string
@@ -40,11 +45,11 @@ export default function TopicTemplate({ topic, description, steps, businessValue
   const [activeTab, setActiveTab] = useState('description');
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 min-h-[100vh]">
       <div className="max-w-7xl mx-auto p-4 pb-0">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-1">
+          <div className=" lg:col-span-2">
             {/* Header Section */}
             <div className="bg-white rounded-lg shadow-sm p-8 mb-6">
               {/* Meta Info */}
@@ -78,7 +83,7 @@ export default function TopicTemplate({ topic, description, steps, businessValue
             </div>
 
             {/* Mobile Swipeable Cards */}
-            <div className="md:hidden lg:hidden col-span-1 bg-gray-50 px-2 ">
+            <div className="md:hidden lg:hidden col-span-2 bg-gray-50 px-2 ">
               <div className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-10 -mx-4 px-4">
 
                 {/* Project Details Card */}
@@ -187,11 +192,32 @@ export default function TopicTemplate({ topic, description, steps, businessValue
                 {/* MARKDOWN */}
                 <Tabs.Content value="description" className="py-4">
                   <div className="not-prose markdown-reset  max-w-none ">
-                    <ReactMarkdown
+                    <Markdown
+                      remarkPlugins={[remarkGfm]}
                       rehypePlugins={[rehypeRaw]}
+                      components={{
+                        code(props) {
+                          const { children, className, node, ...rest } = props
+                          const match = /language-(\w+)/.exec(className || '')
+                          return match ? (
+                            <SyntaxHighlighter
+                              {...rest}
+                              ref={() => { }}
+                              PreTag="div"
+                              children={String(children).replace(/\n$/, '')}
+                              language={match[1]}
+                              style={ prism }
+                            />
+                          ) : (
+                            <code {...rest} className={className}>
+                              {children}
+                            </code>
+                          )
+                        }
+                      }}
                     >
-                    {description}
-                    </ReactMarkdown>
+                      {description}
+                    </Markdown>
                   </div>
                 </Tabs.Content>
 

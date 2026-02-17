@@ -1,10 +1,10 @@
 export default function LoadingSkeleton() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10 animate-pulse">
+    <div className="max-w-7xl mx-auto px-6 py-10 animate-pulse min-h-[100vh]">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* LEFT COLUMN */}
-        <div className="space-y-6">
+        <div className="space-y-6 col-span-2">
           
           {/* Header Card */}
           <div className="bg-white rounded-xl shadow-sm p-8 space-y-6">
@@ -32,7 +32,7 @@ export default function LoadingSkeleton() {
           </div>
 
           {/* Cards */}
-          <div className="bg-white flex direction-row gap-5 rounded-xl shadow-sm space-y-6">
+          <div className="sm:hidden flex bg-white direction-row gap-5 rounded-xl shadow-sm space-y-6">
             <div className="h-50 w-50 bg-gray-200 shadow-xl " />
             <div className="h-50 w-50 bg-gray-200 shadow-xl " />
           </div>
@@ -50,9 +50,6 @@ export default function LoadingSkeleton() {
               <div className="h-4 w-4/6 bg-gray-200 rounded" />
               <div className="h-4 w-3/4 bg-gray-200 rounded" />
               <div className="h-4 w-3/4 bg-white-200 rounded"/>
-              <div className="h-4 w-3/4 bg-gray-200 rounded" />
-              <div className="h-4 w-5/6 bg-gray-200 rounded" />
-              <div className="h-4 w-4/6 bg-gray-200 rounded" />
               <div className="h-4 w-3/4 bg-gray-200 rounded" />
               <div className="h-4 w-5/6 bg-gray-200 rounded" />
               <div className="h-4 w-5/6 bg-gray-200 rounded" />
