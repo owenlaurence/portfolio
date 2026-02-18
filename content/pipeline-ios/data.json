@@ -1,0 +1,52 @@
+
+{
+  "title": "Fully Automated Delivery to iOS App Store and Google Play",
+  "difficulty": "high",
+  "subject": "pipeline-ios",
+  "description": "some kind of quick description",
+  "steps": [
+    "Create a .github/workflows directory in your repository",
+    "Define a YAML workflow file with trigger events (push, pull_request, etc.)",
+    "Set up jobs and steps for testing, building, and deployment",
+    "Configure environment variables and secrets for secure deployment",
+    "Test the pipeline with a sample commit",
+    "Monitor workflow runs and optimize for faster execution"
+  ],
+  "businessValue": "Implementing a CI/CD pipeline reduces manual deployment errors by 80%, decreases time-to-market by enabling multiple daily deployments instead of weekly releases, and frees up developer time by automating repetitive tasks. This translates to faster feature delivery, improved product quality, and reduced operational costs.",
+  "tags": [
+    {
+      "text": "iOS",
+      "color": "blue"
+    },
+    {
+      "text": "Android",
+      "color": "red"
+    },
+    {
+      "text": "Automation",
+      "color": "green"
+    },
+    {
+      "text": "CI/CD",
+      "color": "purple"
+    }
+  ],
+  "technologies": ["GitHub Actions", "Docker", "YAML", "Node.js", "Jest", "AWS", "Terraform"],
+  "challenges": ["Manual deployment bottlenecks", "Inconsistent environment configurations", "Lack of automated testing", "Limited deployment visibility"],
+  "metrics": [
+    {
+      "description": "Deployment frequency increased from weekly to daily",
+      "type": "trend-up"
+    },
+    {
+      "description": "Mean time to recovery reduced by 60%",
+      "type": "check"
+    },
+    {
+      "description": "Developer productivity increased by 40%",
+      "type": "zap"
+    }
+
+  ]
+
+}

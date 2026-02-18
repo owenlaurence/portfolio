@@ -1,77 +1,62 @@
+import { getAllTopics } from "@/lib/content";
 import Link from "next/link";
+import { getTagColor } from '@/src/styles/util/colors';
+import { Tag } from "lucide-react";
 
-type FeatOfStrength = {
-  subject : string,
-  title : string,
-  image : string,
-  description : string
-}
+
+const getDifficultyStyle = (difficulty: string) => {
+  switch (difficulty.toLowerCase()) {
+    case "low":
+      return "text-emerald-600";
+    case "medium":
+      return "text-amber-600";
+    case "high":
+      return "text-rose-600";
+    default:
+      return "text-zinc-600";
+  }
+};
 
 export default function App() {
-  const featsOfStrength : FeatOfStrength[] = [
-  {
-    subject: "oauth",
-    title: "Why OAuth changed how I think about authentication",
-    image: "https://cdn.sanity.io/images/3jwyzebk/production/98e90a206076c70d7fc86b5f89426170146dc9ac-1584x988.png",
-    description: "OAuth lets you stay secure while still giving people the login experience they expect."
-  },
-
-  {
-    subject: "capacitor-intro",
-    title: "Implementing CI/CD Pipeline with GitHub Actions",
-    image: "https://capacitorjs.com/og.png",
-    description: "One codebase. Real native APIs. No more re-implementing."
-  },
-
-  {
-    subject: "capacitor-plugin",
-    title: "When the plugin isn't enough: extending Capacitor for yourself",
-    image: "https://capacitorjs.com/docs/img/v6/docs/capacitor-card.png",
-    description: "There's usually a plugin for that. And when there isn't? Turns out building your own isn't as scary as it sounds."
-  },
-
-  {
-    subject: "oidc",
-    title: "Making login feel invisible with OIDC",
-    image: "https://goteleport.com/blog/_next/static/media/oidc-header.0cf20588.png",
-    description: "Users don't want another password. OIDC lets them log in with what they already trust."
-  },
-
-  {
-    subject: "server-side-next",
-    title: "Where security finally clicked for me in Next.js",
-    image: "https://miro.medium.com/1*1itDSqxMNCT_XMksG99r-A.png",
-    description: "Server-side rendering isn't just about speed. It provides the security React always needed."
-  }
-]
-
-
+  const topics = getAllTopics();
 
   return (
-    <div className="app">
-      <main className="main">
-        <div className="grid">
-          {featsOfStrength.map((feat, i) => (
-            <Link
-              href={`/topic/${feat.subject}`}
-              key={i}
-              className="card"
+    <div className="min-h-screen bg-gradient-to-br from-zinc-50 to-zinc-200 pt-10">
+      <div className="max-w-8xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {[...topics].map((topic, i) => (
+          <Link key={"topic_" + i} href={`/topic/${topic.subject}`}>
+            <div
+              className="group relative rounded-2xl bg-white p-6 shadow-sm border border-zinc-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
-              <img
-                src={feat.image}
-                alt={feat.title}
-                className="card-image"
-              />
-              <div className="card-body">
-                <h3>{feat.title}</h3>
-                <p>{feat.description}</p>
+              <h3 className="text-lg font-semibold text-zinc-800 group-hover:text-black transition-colors pt-6">
+                {topic.title}
+              </h3>
+              <div className="absolute top-4 right-4 text-xs font-medium tracking-wide">
+                <span className="text-zinc-400">difficulty:</span>{" "}
+                <span className={`${getDifficultyStyle(topic.difficulty)} font-semibold`}>
+                  {topic.difficulty}
+                </span>
               </div>
-            </Link>
-          ))}
-        </div>
 
-      </main>
+              <div className="flex-shrink">
 
+                {topic.tags.map((tag, i) => {
+                  return <span key={"tag_" + i} className={`inline-flex items-center gap-1 px-2 py-0.5 m-1  ${getTagColor(tag.color)} rounded-full text-xs`}>
+
+                    <Tag className="size-3" />
+                    {tag.text}
+                  </span>
+                })
+
+                }
+
+              </div>
+
+
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

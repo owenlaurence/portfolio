@@ -1,77 +1,66 @@
-
-"use client"
-import { useState } from 'react';
+import { getTopic, getAllSlugs } from "@/lib/content";
+import ReactMarkdown from "react-markdown";
 import * as Tabs from '@radix-ui/react-tabs';
-import { Clock, Calendar, Tag, CheckCircle2, AlertCircle, Zap, Code2, GitBranch, Award, TrendingUp, Users } from 'lucide-react';
+import { Calendar, Tag, CheckCircle2, Zap, TrendingUp, Users, MoveLeft } from 'lucide-react';
 import { JSX } from 'react';
 import { getTagColor } from '@/src/styles/util/colors';
 // import ReactMarkdown from 'react-markdown';
 import Markdown from 'react-markdown';
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import remarkGfm from 'remark-gfm';
 import "./markdown.css"
 import rehypeRaw from 'rehype-raw';
-import {lucario} from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { a11yDark, agate, dark, kimbieLight, lightfair } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { a11yLight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { lucario } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { prism } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import Link from "next/link";
 
-type TopicProps = {
-  topic: string
-  subject: string
-  description: string
-  steps?: string[];
-  businessValue: string
-  tags: Tag[]
-  metrics: ImpactMetric[]
-  technologies: string[],
-  challenges: string[]
-
+export function generateStaticParams() {
+  return getAllSlugs().map((slug) => ({ slug }));
 }
 
-type ImpactMetric = {
-  description: string
-  icon: JSX.Element
-}
-
-type Tag = {
-  text: string
-  color: string
+// this makes tailwind happy.
+export function renderMetricIcon(type: string) {
+  switch (type) {
+    case "trend-up": return <TrendingUp className={`size-6 text-blue-600`} />
+    case "check": return <CheckCircle2 className={`size-6 text-green-600`} />
+    case "zap": return <Zap className={`size-6 text-purple-600`} />
+    default: return <Users className={`size-6 text-gray-600`} />
+  }
 }
 
 
-export default function TopicTemplate({ topic, description, steps, businessValue, tags, metrics, technologies, challenges }: TopicProps) {
-
-  const [activeTab, setActiveTab] = useState('description');
+export default async function TopicPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params;
+  const { markdown, data } = getTopic(slug);
 
   return (
     <div className="min-h-screen bg-gray-50 min-h-[100vh]">
       <div className="max-w-7xl mx-auto p-4 pb-0">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1  lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className=" lg:col-span-2">
             {/* Header Section */}
             <div className="bg-white rounded-lg shadow-sm p-8 mb-6">
-              {/* Meta Info */}
-              <div className="flex items-center gap-4 mb-4 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
-                  <Calendar className="size-4" />
-                  <span>February 2026</span>
-                </div>
-                <div className="flex items-center gap-2">
+                <Link href={"/"} >
+                <div className="flex items-center gap-2 mb-6">
                   {/* <Users className="size-4" /> */}
-                  <Calendar className="size-4" />
-                  <span>1 week</span>
+                  <MoveLeft className="size-4" />
+                  <span>Home</span>
                 </div>
-              </div>
+                </Link>
 
               {/* Title */}
-              <h1 className="text-4xl mb-4">{topic}</h1>
+              <h1 className="text-4xl mb-4">{data.title}</h1>
 
               {/* Tags and Difficulty */}
               <div className="flex flex-wrap items-center gap-3 mb-6">
-                {tags.map((tag, i) => {
+                {data.tags.map((tag, i) => {
                   return <span key={"tag_" + i} className={`inline-flex items-center gap-1 px-3 py-1 ${getTagColor(tag.color)} rounded-full text-sm`}>
+
                     <Tag className="size-3" />
                     {tag.text}
                   </span>
@@ -126,10 +115,10 @@ export default function TopicTemplate({ topic, description, steps, businessValue
                   </div>
 
                   <div className="space-y-6">
-                    {metrics.map((metric, i) => (
+                    {data.metrics.map((metric, i) => (
                       <div key={`metric-mobile-${i}`} className="flex items-start gap-4">
                         <div className="p-3 rounded-xl bg-blue-50 border border-blue-100 shadow-sm">
-                          {metric.icon}
+                          {renderMetricIcon(metric.type)}
                         </div>
                         <div className="text-sm text-gray-800 leading-relaxed">
                           {metric.description}
@@ -149,7 +138,7 @@ export default function TopicTemplate({ topic, description, steps, businessValue
                   </div>
 
                   <ul className="space-y-4 text-sm text-gray-800">
-                    {challenges.map((challenge, i) => (
+                    {data.challenges.map((challenge, i) => (
                       <li key={`challenge-mobile-${i}`} className="flex gap-3">
                         <span className="text-blue-600 mt-[6px] text-base shrink-0">•</span>
                         <span className="leading-relaxed">{challenge}</span>
@@ -163,7 +152,7 @@ export default function TopicTemplate({ topic, description, steps, businessValue
 
             {/* Tabs Section */}
             <div className="bg-white rounded-lg shadow-sm p-4">
-              <Tabs.Root value={activeTab} onValueChange={setActiveTab}>
+              <Tabs.Root defaultValue="description">
                 <Tabs.List className="flex gap-2 border-b border-gray-200 mb-6 overflow-x-auto whitespace-nowrap">
                   <Tabs.Trigger
                     value="description"
@@ -202,11 +191,11 @@ export default function TopicTemplate({ topic, description, steps, businessValue
                           return match ? (
                             <SyntaxHighlighter
                               {...rest}
-                              ref={() => { }}
+                              ref={undefined}
                               PreTag="div"
                               children={String(children).replace(/\n$/, '')}
                               language={match[1]}
-                              style={ prism }
+                              style={prism}
                             />
                           ) : (
                             <code {...rest} className={className}>
@@ -216,14 +205,14 @@ export default function TopicTemplate({ topic, description, steps, businessValue
                         }
                       }}
                     >
-                      {description}
+                      {markdown}
                     </Markdown>
                   </div>
                 </Tabs.Content>
 
                 <Tabs.Content value="steps" className="py-4">
                   <ol className="list-decimal list-inside space-y-3">
-                    {steps?.map((step, index) => (
+                    {data.steps?.map((step, index) => (
                       <li key={index} className="text-gray-700 leading-relaxed">
                         {step}
                       </li>
@@ -232,7 +221,7 @@ export default function TopicTemplate({ topic, description, steps, businessValue
                 </Tabs.Content>
 
                 <Tabs.Content value="value" className="py-4">
-                  <p className="text-gray-700 leading-relaxed">{businessValue}</p>
+                  <p className="text-gray-700 leading-relaxed">{data.businessValue}</p>
                 </Tabs.Content>
               </Tabs.Root>
             </div>
@@ -241,18 +230,18 @@ export default function TopicTemplate({ topic, description, steps, businessValue
             <div className="bg-white rounded-lg shadow-sm p-8 mt-6">
               <h3 className="text-xl mb-4">Technologies & Tools</h3>
               <div className="flex flex-wrap gap-3">
-                {technologies.map((tech, i) => (
+                {data.technologies.map((tech, i) => (
                   <span key={`tech-${i}`} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">{tech}</span>
                 ))}
 
               </div>
             </div>
- 
 
 
-            
 
-            
+
+
+
           </div>
 
 
@@ -277,10 +266,10 @@ export default function TopicTemplate({ topic, description, steps, businessValue
             <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
               <h3 className="text-sm uppercase tracking-wide text-gray-500 mb-4">Impact Metrics</h3>
               <div className="space-y-4">
-                {metrics.map((metric, i) => {
+                {data.metrics.map((metric, i) => {
                   return <div key={`metric-${i}`} className="flex items-start gap-3">
                     <div className={`p-2 bg-100 rounded-lg`}>
-                      {metric.icon}
+                      {renderMetricIcon(metric.type)}
                     </div>
                     <div>
                       <div className="text">{metric.description}</div>
@@ -296,7 +285,7 @@ export default function TopicTemplate({ topic, description, steps, businessValue
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="text-sm uppercase tracking-wide text-gray-500 mb-4">Key Challenges Solved</h3>
               <ul className="space-y-3 text-sm text-gray-700">
-                {challenges.map((challenge, i) => (
+                {data.challenges.map((challenge, i) => (
                   <li key={`challenge-${i}`} className="flex gap-2">
                     <span className="text-blue-600 shrink-0">•</span>
                     <span>{challenge}</span>
@@ -311,5 +300,6 @@ export default function TopicTemplate({ topic, description, steps, businessValue
         </div>
       </div>
     </div>
+
   );
 }
