@@ -90,7 +90,7 @@ export default async function TopicPage({
                     Lead Developer & DevOps Engineer
                   </div>
                 </div>
-
+                <br/>
                 <div className="flex flex-wrap gap-3">
                   {data.tags.map((tag, i) => (
                     <span
