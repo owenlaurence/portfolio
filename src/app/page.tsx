@@ -31,6 +31,7 @@ export default function App() {
               <h3 className="text-lg font-semibold text-zinc-800 group-hover:text-black transition-colors pt-6">
                 {topic.title}
               </h3>
+                <div className="text-sm text-gray-500 mb-1 py-2">{topic.description}</div>
               <div className="absolute top-4 right-4 text-xs font-medium tracking-wide">
                 <span className="text-zinc-400">difficulty:</span>{" "}
                 <span className={`${getDifficultyStyle(topic.difficulty)} font-semibold`}>
@@ -41,7 +42,7 @@ export default function App() {
               <div className="flex-shrink">
 
                 {topic.tags.map((tag, i) => {
-                  return <span key={"tag_" + i} className={`inline-flex items-center gap-1 px-2 py-0.5 m-1  ${getTagColor(tag.color)} rounded-full text-xs`}>
+                  return <span key={"tag_" + i} className={`inline-flex items-center gap-1 px-2 py-0.5 m-1 ml-0  ${getTagColor(tag.color)} rounded-full text-xs`}>
 
                     <Tag className="size-3" />
                     {tag.text}

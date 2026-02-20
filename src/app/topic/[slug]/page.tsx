@@ -38,266 +38,228 @@ export default async function TopicPage({
   const { markdown, data } = getTopic(slug);
 
   return (
-    <div className="min-h-screen bg-gray-50 min-h-[100vh]">
-      <div className="max-w-7xl mx-auto p-4 pb-0">
-        <div className="grid grid-cols-1  lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className=" lg:col-span-2">
-            {/* Header Section */}
-            <div className="bg-white rounded-lg shadow-sm p-8 mb-6">
-                <Link href={"/"} >
-                <div className="flex items-center gap-2 mb-6">
-                  {/* <Users className="size-4" /> */}
-                  <MoveLeft className="size-4" />
-                  <span>Home</span>
-                </div>
-                </Link>
-
-              {/* Title */}
-              <h1 className="text-4xl mb-4">{data.title}</h1>
-
-              {/* Tags and Difficulty */}
-              <div className="flex flex-wrap items-center gap-3 mb-6">
-                {data.tags.map((tag, i) => {
-                  return <span key={"tag_" + i} className={`inline-flex items-center gap-1 px-3 py-1 ${getTagColor(tag.color)} rounded-full text-sm`}>
-
-                    <Tag className="size-3" />
-                    {tag.text}
-                  </span>
-                })
-
-                }
+    <div className="bg-gray-50">
+      <div className="grid grid-cols-3 gap-4 p-3">
+        {/* Main Content */}
+        <div className="col-span-2">
+          {/* Header Section */}
+          <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+            <Link href={"/"} >
+              <div className="flex items-center gap-2 mb-6">
+                <MoveLeft className="size-4" />
+                <span>Home</span>
               </div>
+            </Link>
 
-            </div>
-
-            {/* Mobile Swipeable Cards */}
-            <div className="md:hidden lg:hidden col-span-2 bg-gray-50 px-2 ">
-              <div className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-10 -mx-4 px-4">
-
-                {/* Project Details Card */}
-                <div className="min-w-[85%] snap-center bg-white rounded-2xl border border-gray-200 shadow-xl transform transition-transform duration-500 ease-in-out p-6 scale-95 first:scale-105 last:scale-105">
-                  <div className="mb-5">
-                    <h3 className="text-sm font-bold uppercase tracking-wider text-gray-600">
-                      Project Details
-                    </h3>
-                    <div className="h-1 w-12 bg-blue-600 rounded-full mt-3"></div>
-                  </div>
-
-                  <div className="space-y-6">
-                    <div>
-                      <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
-                        My Role
-                      </div>
-                      <div className="text-sm font-semibold text-gray-900">
-                        Lead Developer & DevOps Engineer
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
-                        Team Size
-                      </div>
-                      <div className="text-sm font-semibold text-gray-900">
-                        5 engineers
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Impact Metrics Card */}
-                <div className="min-w-[85%] snap-center bg-white rounded-2xl border border-gray-200 shadow-xl transform transition-transform duration-500 ease-in-out p-6 scale-95 first:scale-105 last:scale-105">
-                  <div className="mb-5">
-                    <h3 className="text-sm font-bold uppercase tracking-wider text-gray-600">
-                      Impact Metrics
-                    </h3>
-                    <div className="h-1 w-12 bg-blue-600 rounded-full mt-3"></div>
-                  </div>
-
-                  <div className="space-y-6">
-                    {data.metrics.map((metric, i) => (
-                      <div key={`metric-mobile-${i}`} className="flex items-start gap-4">
-                        <div className="p-3 rounded-xl bg-blue-50 border border-blue-100 shadow-sm">
-                          {renderMetricIcon(metric.type)}
-                        </div>
-                        <div className="text-sm text-gray-800 leading-relaxed">
-                          {metric.description}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Key Challenges Card */}
-                <div className="min-w-[85%] snap-center bg-white rounded-2xl border border-gray-200 shadow-xl transform transition-transform duration-500 ease-in-out p-6 scale-95 first:scale-105 last:scale-105">
-                  <div className="mb-5">
-                    <h3 className="text-sm font-bold uppercase tracking-wider text-gray-600">
-                      Key Challenges Solved
-                    </h3>
-                    <div className="h-1 w-12 bg-blue-600 rounded-full mt-3"></div>
-                  </div>
-
-                  <ul className="space-y-4 text-sm text-gray-800">
-                    {data.challenges.map((challenge, i) => (
-                      <li key={`challenge-mobile-${i}`} className="flex gap-3">
-                        <span className="text-blue-600 mt-[6px] text-base shrink-0">•</span>
-                        <span className="leading-relaxed">{challenge}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-              </div>
-            </div>
-
-            {/* Tabs Section */}
-            <div className="bg-white rounded-lg shadow-sm p-4">
-              <Tabs.Root defaultValue="description">
-                <Tabs.List className="flex gap-2 border-b border-gray-200 mb-6 overflow-x-auto whitespace-nowrap">
-                  <Tabs.Trigger
-                    value="description"
-                    className="px-4 py-2 border-b-2 transition-colors data-[state=active]:border-blue-600 data-[state=inactive]:border-transparent data-[state=inactive]:text-gray-600 hover:text-gray-900"
-                  >
-                    <span className="sm:hidden">About</span>
-                    <span className="hidden sm:inline">Description</span>
-                  </Tabs.Trigger>
-                  <Tabs.Trigger
-                    value="steps"
-                    className="px-4 py-2 border-b-2 transition-colors data-[state=active]:border-blue-600 data-[state=inactive]:border-transparent data-[state=inactive]:text-gray-600 hover:text-gray-900"
-                  >
-                    <span className="sm:hidden">Steps</span>
-                    <span className="hidden sm:inline">Steps to Accomplish</span>
-                  </Tabs.Trigger>
-                  <Tabs.Trigger
-                    value="value"
-                    className="px-4 py-2 border-b-2 transition-colors data-[state=active]:border-blue-600 data-[state=inactive]:border-transparent data-[state=inactive]:text-gray-600 hover:text-gray-900"
-                  >
-                    <span className="sm:hidden">Value</span>
-                    <span className="hidden sm:inline">Business Value</span>
-                  </Tabs.Trigger>
-                </Tabs.List>
-
-
-                {/* MARKDOWN */}
-                <Tabs.Content value="description" className="py-4">
-                  <div className="not-prose markdown-reset  max-w-none ">
-                    <Markdown
-                      remarkPlugins={[remarkGfm]}
-                      rehypePlugins={[rehypeRaw]}
-                      components={{
-                        code(props) {
-                          const { children, className, node, ...rest } = props
-                          const match = /language-(\w+)/.exec(className || '')
-                          return match ? (
-                            <SyntaxHighlighter
-                              {...rest}
-                              ref={undefined}
-                              PreTag="div"
-                              children={String(children).replace(/\n$/, '')}
-                              language={match[1]}
-                              style={prism}
-                            />
-                          ) : (
-                            <code {...rest} className={className}>
-                              {children}
-                            </code>
-                          )
-                        }
-                      }}
-                    >
-                      {markdown}
-                    </Markdown>
-                  </div>
-                </Tabs.Content>
-
-                <Tabs.Content value="steps" className="py-4">
-                  <ol className="list-decimal list-inside space-y-3">
-                    {data.steps?.map((step, index) => (
-                      <li key={index} className="text-gray-700 leading-relaxed">
-                        {step}
-                      </li>
-                    ))}
-                  </ol>
-                </Tabs.Content>
-
-                <Tabs.Content value="value" className="py-4">
-                  <p className="text-gray-700 leading-relaxed">{data.businessValue}</p>
-                </Tabs.Content>
-              </Tabs.Root>
-            </div>
-
-            {/* Technologies Used */}
-            <div className="bg-white rounded-lg shadow-sm p-8 mt-6">
-              <h3 className="text-xl mb-4">Technologies & Tools</h3>
-              <div className="flex flex-wrap gap-3">
-                {data.technologies.map((tech, i) => (
-                  <span key={`tech-${i}`} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">{tech}</span>
-                ))}
-
-              </div>
-            </div>
-
-
-
-
+            {/* Title */}
+            <h2 className="text-3xl mb-4">{data.title}</h2>
 
 
           </div>
 
+          {/* Mobile Tabs */}
+          <div className="lg:hidden bg-white rounded-2xl border border-gray-200 shadow-sm mb-6">
+            <Tabs.Root defaultValue="details">
 
-          {/* Sidebar */}
-          <div className="hidden md:block lg:col-span-1">
-            {/* Project Context */}
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-6 sticky top-8">
-              <h3 className="text-sm uppercase tracking-wide text-gray-500 mb-4">Project Details</h3>
-              <div className="space-y-4">
-                <div>
-                  <div className="text-sm text-gray-500 mb-1">My Role</div>
-                  <div className="text-sm">Lead Developer & DevOps Engineer</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-500 mb-1">Team Size</div>
-                  <div className="text-sm">5 engineers</div>
-                </div>
-              </div>
-            </div>
+              <Tabs.List className="flex overflow-x-auto border-b border-gray-200 whitespace-nowrap">
+                {[
+                  { value: "details", label: "Details" },
+                  { value: "value", label: "Value" },
+                  { value: "metrics", label: "Metrics" },
+                ].map((tab) => (
+                  <Tabs.Trigger
+                    key={tab.value}
+                    value={tab.value}
+                    className="px-4 py-3 text-sm font-medium shrink-0
+                        data-[state=active]:text-blue-600
+                        data-[state=active]:border-b-2
+                        data-[state=active]:border-blue-600"
+                  >
+                    {tab.label}
+                  </Tabs.Trigger>
+                ))}
 
-            {/* Quick Stats */}
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-              <h3 className="text-sm uppercase tracking-wide text-gray-500 mb-4">Impact Metrics</h3>
-              <div className="space-y-4">
-                {data.metrics.map((metric, i) => {
-                  return <div key={`metric-${i}`} className="flex items-start gap-3">
-                    <div className={`p-2 bg-100 rounded-lg`}>
+              </Tabs.List>
+              {/* DETAILS */}
+              <Tabs.Content value="details" className="p-5">
+                <div>
+                  <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
+                    My Role
+                  </div>
+                  <div className="text-sm font-semibold text-gray-900">
+                    Lead Developer & DevOps Engineer
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  {data.tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className={`inline-flex items-center gap-1 px-3 py-1 ${getTagColor(tag.color)} rounded-full text-sm`}
+                    >
+                      <Tag className="size-3" />
+                      {tag.text}
+                    </span>
+                  ))}
+                </div>
+              </Tabs.Content>
+
+
+              {/* VALUE */}
+              <Tabs.Content value="value" className="p-5">
+                <ul className="space-y-4 text-sm text-gray-800">
+                  {data.challenges.map((challenge, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span className="text-blue-600 mt-[6px] shrink-0">•</span>
+                      <span className="leading-relaxed">{challenge}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Tabs.Content>
+
+
+              {/* METRICS */}
+              <Tabs.Content value="metrics" className="p-5 space-y-6">
+                {data.metrics.map((metric, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <div className="p-3 rounded-xl bg-blue-50 border border-blue-100 shadow-sm">
                       {renderMetricIcon(metric.type)}
                     </div>
-                    <div>
-                      <div className="text">{metric.description}</div>
+                    <div className="text-sm text-gray-800 leading-relaxed">
+                      {metric.description}
                     </div>
                   </div>
-                })
+                ))}
+              </Tabs.Content>
 
-                }
-              </div>
+            </Tabs.Root>
+
+          </div>
+
+
+          {/* MARKDOWN */}
+          <div className="bg-white rounded-lg shadow-sm p-4">
+            <div className="not-prose markdown-reset  max-w-none ">
+              <Markdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  code(props) {
+                    const { children, className, node, ...rest } = props
+                    const match = /language-(\w+)/.exec(className || '')
+                    return match ? (
+                      <SyntaxHighlighter
+                        {...rest}
+                        ref={undefined}
+                        PreTag="div"
+                        children={String(children).replace(/\n$/, '')}
+                        language={match[1]}
+                        style={prism}
+                      />
+                    ) : (
+                      <code {...rest} className={className}>
+                        {children}
+                      </code>
+                    )
+                  }
+                }}
+              >
+                {markdown}
+              </Markdown>
             </div>
+          </div>
 
-            {/* Key Challenges */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="text-sm uppercase tracking-wide text-gray-500 mb-4">Key Challenges Solved</h3>
-              <ul className="space-y-3 text-sm text-gray-700">
-                {data.challenges.map((challenge, i) => (
-                  <li key={`challenge-${i}`} className="flex gap-2">
-                    <span className="text-blue-600 shrink-0">•</span>
-                    <span>{challenge}</span>
-                  </li>
+          {/* Technologies Used */}
+          <div className="bg-white rounded-lg shadow-sm p-8 mt-6">
+            <h3 className="text-xl mb-4">Technologies & Tools</h3>
+            <div className="flex flex-wrap gap-3">
+              {data.technologies.map((tech, i) => (
+                <span key={`tech-${i}`} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">{tech}</span>
+              ))}
 
-                ))
-
-                }
-              </ul>
             </div>
           </div>
         </div>
+
+
+        {/* Sidebar */}
+        <div className="hidden col-span-1 lg:block ">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 lg:p-8 space-y-8 lg:space-y-10">
+
+            {/* Project Details */}
+            <section>
+              <h3 className="text-xs uppercase tracking-wide text-gray-400 mb-4">
+                Project Details
+              </h3>
+
+              <div className="space-y-4 text-sm">
+                <div>
+                  <div className="text-gray-500 mb-1">My Role</div>
+                  <div className="font-medium text-gray-900">
+                    Lead Developer & DevOps Engineer
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {data.tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className={`inline-flex items-center gap-1 px-3 py-1 ${getTagColor(tag.color)} rounded-full text-xs`}
+                    >
+                      <Tag className="size-3" />
+                      {tag.text}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Divider */}
+            <div className="border-t border-gray-100" />
+
+            {/* Impact Metrics */}
+            <section>
+              <h3 className="text-xs uppercase tracking-wide text-gray-400 mb-4">
+                Impact
+              </h3>
+
+              <div className="space-y-4">
+                {data.metrics.map((metric, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className="mt-1">
+                      {renderMetricIcon(metric.type)}
+                    </div>
+                    <div className="text-sm text-gray-700 leading-relaxed">
+                      {metric.description}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Divider */}
+            <div className="border-t border-gray-100" />
+
+            {/* Challenges */}
+            <section>
+              <h3 className="text-xs uppercase tracking-wide text-gray-400 mb-4">
+                Challenges Solved
+              </h3>
+
+              <ul className="space-y-3 text-sm text-gray-700">
+                {data.challenges.map((challenge, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span className="text-blue-600 mt-[6px] shrink-0">•</span>
+                    <span className="leading-relaxed">{challenge}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+          </div>
+        </div>
+
+
       </div>
     </div>
 
