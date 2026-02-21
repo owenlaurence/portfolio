@@ -38,6 +38,9 @@ export default function Cookies() {
             preferencesModal: {
               title: "Manage Cookie Preferences",
               closeIconLabel: "Close",
+              acceptAllBtn: "Accept All",
+              acceptNecessaryBtn: "Accept Necessary",
+              savePreferencesBtn: "Save Preferences",
               sections: [
                 {
                   title: "Strictly Necessary Cookies",
