@@ -42,19 +42,19 @@ export type Topic = {
   description: string
   steps?: string[];
   businessValue: string
-  tags: Tag[]
+  tags: ProjectTag[]
   metrics: ImpactMetric[]
   technologies: string[],
   challenges: string[]
 
 }
 
-type ImpactMetric = {
+export type ImpactMetric = {
   description: string
   type: string
 }
 
-type Tag = {
+export type ProjectTag = {
   text: string
   color: string
 }
