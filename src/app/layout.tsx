@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import Header from "./components/header";
 import Footer from "./components/footer";
+import Cookies from "@/lib/components/Cookies";
 
 export const metadata: Metadata = {
   title: "mcpartlan.dev",
@@ -22,6 +23,7 @@ export default function RootLayout({
         className={`antialiased`}
       >
         <Analytics/>
+        <Cookies/>
         <SpeedInsights/>
         <Header/>
         {children}
