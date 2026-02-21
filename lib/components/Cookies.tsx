@@ -61,6 +61,13 @@ export default function Cookies() {
           },
         },
       },
+      onChange(param) {
+        // end logrocket session if the analytics cookie is not selected.
+        if (!param.changedCategories.find(c => c === "analytics")) {
+          LogRocket.init("");
+
+        }
+      },
     });
   }, []);
 
