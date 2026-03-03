@@ -1,8 +1,16 @@
+import { MoveLeft } from "lucide-react";
 import Link from "next/link";
 
 export default function Privacy() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-50 to-zinc-200 py-16 px-6">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+            >
+              <MoveLeft className="size-4" />
+              <span>Home</span>
+            </Link>
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg border border-zinc-200 p-8">
         <h1 className="text-3xl font-bold text-zinc-900 mb-6">Privacy Policy</h1>
 
