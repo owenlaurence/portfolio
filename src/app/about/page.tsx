@@ -9,10 +9,10 @@ export default function AboutPage() {
 
       <div className="max-w-5xl mx-auto px-4 py-4">
 
-        <div className="bg-white rounded-xl shadow-sm px-6 sm:px-10 py-10 space-y-20">
+        <div className="bg-white rounded-xl shadow-sm px-6 sm:px-10 py-10 space-y-10">
 
           {/* Header */}
-          <section className="border-b border-gray-100 pb-8">
+          <section className="border-gray-100 pb-8">
             <div className="mb-3">
               <Link
                 href="/"
@@ -66,8 +66,8 @@ export default function AboutPage() {
 
 
           {/* Architecture Section */}
-            <section className="space-y-8 border-t border-gray-100 pt-10">
-              <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-gray-900">
+          <section className="space-y-8 border-t border-gray-100 pt-4">
+            <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-gray-900">
               Technical Background
             </h2>
 
@@ -84,12 +84,12 @@ export default function AboutPage() {
           </section>
 
           {/* Technical Ownership */}
-          <section className="space-y-8 border-t border-gray-100 pt-10">
+          <section className="space-y-8 border-t border-gray-100 pt-4">
             <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-gray-900">
               Technical Ownership
             </h2>
 
-              <div className="space-y-5 text-base text-gray-700 leading-8 max-w-3xl">
+            <div className="space-y-5 text-base text-gray-700 leading-8 max-w-3xl">
               <p>
                 I tend to take ownership of problems involving:
               </p>
@@ -105,7 +105,7 @@ export default function AboutPage() {
           </section>
 
           {/* Philosophy */}
-          <section className="space-y-8 border-t border-gray-100 pt-10">
+          <section className="space-y-8 border-t border-gray-100 pt-4">
             <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-gray-900">
               Philosophy
             </h2>
@@ -119,9 +119,9 @@ export default function AboutPage() {
                 I value clean boundaries, pragmatic trade-offs, and writing code that remains understandable years later. Outside of production work, I experiment with architectural patterns, runtime behavior, and tooling that improve developer efficiency and system robustness.
               </p>
 
-  <p>
-    I'm motivated by roles that involve deeper architectural ownership, systems-level thinking, and building software that operates reliably at scale — whether that’s backend-heavy platforms, native applications, or infrastructure-focused engineering.
-  </p>
+              <p>
+                I'm motivated by roles that involve deeper architectural ownership, systems-level thinking, and building software that operates reliably at scale — whether that’s backend-heavy platforms, native applications, or infrastructure-focused engineering.
+              </p>
 
             </div>
           </section>
