@@ -1,0 +1,37 @@
+{
+  "title": "User Authentication done propery with Server-side Rendering",
+  "difficulty": "medium",
+  "subject": "server-side-auth",
+  "description": "some kind of quick description",
+  "steps": [
+    "Create a Next.js application",
+    "Setup a tenant in your Authentication Provider",
+    "Integrate your Providers SDK",
+    "Optional - implement PKCE for extra security"
+  ],
+  "businessValue": "Authenticate your users securely while providing modern authentication factors.",
+  "tags": [
+      "Web",
+      "SSR",
+      "OAuth",
+      "OIDC"
+  ],
+  "technologies": ["Next.js", "Server-side Rendering", "OAuth", "OIDC", "PKCE", "Auth0"],
+  "challenges": ["Social Signin & SSO", "Multifactor Authentication", "Passwordless & Passkeys", "Biometrics"],
+  "metrics": [
+    {
+      "description": "",
+      "type": "trend-up"
+    },
+    {
+      "description": "Mean time to recovery reduced by 60%",
+      "type": "check"
+    },
+    {
+      "description": "Developer productivity increased by 40%",
+      "type": "zap"
+    }
+
+  ]
+
+}

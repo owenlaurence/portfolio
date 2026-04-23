@@ -1,5 +1,5 @@
 "use server"
-import { getTopic, getAllSlugs, ProjectTag, ImpactMetric } from "@/lib/content";
+import { getTopic, getAllSlugs, ImpactMetric } from "@/lib/content";
 import * as Tabs from '@radix-ui/react-tabs';
 import { CheckCircle2, Zap, TrendingUp, Users, MoveLeft, Tag } from 'lucide-react';
 import { getTagColor } from '@/src/styles/util/colors';
@@ -38,7 +38,7 @@ export default async function TopicPage({
   const { markdown, data } = getTopic(slug);
 
   return (
-    <div className="bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 max-w-7xl mx-auto">
         {/* Main Content */}
         <div className="col-span-2">
@@ -166,17 +166,17 @@ function DescriptionBlock({ description } : { description : string }) {
   );
 }
 
-function TagsList({ tags, size = "sm" } : { tags : ProjectTag[], size : string }) {
+function TagsList({ tags, size = "sm" } : { tags : string[], size : string }) {
   const textSize = size === "xs" ? "text-xs" : "text-sm";
   return (
     <div className="flex flex-wrap gap-3">
       {tags.map((tag) => (
         <span
-          key={tag.text}
-          className={`inline-flex items-center gap-1 px-3 py-1 ${getTagColor(tag.color)} rounded-full ${textSize}`}
+          key={tag}
+          className={`inline-flex items-center gap-1 px-3 py-1 ${getTagColor(tag)} rounded-full ${textSize}`}
         >
           <Tag className="size-3" />
-          {tag.text}
+          {tag}
         </span>
       ))}
     </div>

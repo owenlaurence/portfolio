@@ -5,33 +5,33 @@ The repository is available above if you prefer to follow along instead.
 
 ### Project Setup
 Start with creating a Next.js app
-~~~ bash
+~~~ 
 npx create-next-app@latest
 ~~~
 Name your application and follow the prompts.  
 This example will use Typescript, ESLint, Tailwind, and App Router. You may change this configuration, but App Router is highly recommended.
 
 From the root of your new Next.js application, install the necessary Capacitor packages: 
-~~~ bash
+~~~ shell
 npm install @capacitor/core
 npm install -D @capacitor/cli
 ~~~
 
 Modify your **next.config.ts** file by adding the output property:
-~~~ TS
+~~~ ts
 const nextConfig: NextConfig = {
   output: "export",   // tells Next.js to generate static HTML.
   trailingSlash: true // Nice to have in case you decide to build routes.
 };
 ~~~
-~~~ bash
+~~~ 
 npm run build
 ~~~
 This will build our Next.js application to a directory named "out".
 > Note: Setting output to **export** will remove our ability to render server-side. Capacitor does not support SSR or server-actions, since mobile applications are hosted by App Store providers.
 
 Next, update your **capacitor.config.ts** file to point to our new **out** directory.
-~~~ TS
+~~~ ts
 const config: CapacitorConfig = {
   ...
   webDir: 'out'
@@ -42,7 +42,7 @@ const config: CapacitorConfig = {
 
 Use the @capacitor/cli tool to initiate an iOS project and add your native platform(s): 
 
-~~~ bash
+~~~ shell
 npx cap init
 npm install @capacitor/ios      # if you want iOS
 npm install @capacitor/android  # if you want Android
@@ -57,7 +57,7 @@ npm install @capacitor/android  # if you want Android
 Ensure [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12) is installed before creating an Android project.
 
 Create the Xcode project and sync with build
-~~~ bash
+~~~ shell
 npx cap add ios     
 npx cap sync ios 
 npx cap open ios 
@@ -70,7 +70,7 @@ With Xcode open, run your application to verify proper installation.
 
 #### Set the required permissions for Geolocation
 Open <code>Info.plist</code> and add the following:
-~~~ XML
+~~~ xml
 <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 <string>This application uses your location.</string>
 
@@ -79,7 +79,7 @@ Open <code>Info.plist</code> and add the following:
 ~~~
 
 In subsequent builds, you may build your app directly from the command line like so:
-~~~bash
+~~~ shell
 npx cap run ios
 ~~~
 so that you do not need to open Xcode every time.
@@ -95,7 +95,7 @@ so that you do not need to open Xcode every time.
 Ensure [Android Studio](https://developer.android.com/studio) is installed before creating an Android project.
 
 Create the Android project and sync with build
-~~~ bash
+~~~ shell
 npx cap add android
 npx cap sync android
 npx cap open android
@@ -108,7 +108,7 @@ With Android Studio open, run your application to verify proper installation.
 
 #### Set the required permissions for Geolocation
 Open <code>AndroidManifest.xml</code> and add the following:
-~~~ XML
+~~~ xml
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> 
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-feature android:name="android.hardware.location.gps" />
@@ -120,7 +120,7 @@ Open <code>AndroidManifest.xml</code> and add the following:
 ### Geolocation Prompts
 Now that our native applications are set up, we will focus on configuring our geolocation prompts.   
 Install the official geolocation plugin:
-~~~bash
+~~~ shell
 npm install @capacitor/geolocation
 ~~~
 
@@ -175,7 +175,7 @@ export default function LocationComponent() {
 ~~~
 
 Now create a new build and run our mobile application
-~~~ bash
+~~~ shell
 npm run build 
 
 # ios

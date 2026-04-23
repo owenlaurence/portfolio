@@ -1,4 +1,3 @@
-
 import fs from "fs";
 import path from "path";
 
@@ -33,6 +32,19 @@ export function getAllTopics() {
 }
 
 
+export function getDifficultyStyle(difficulty: string) {
+  switch (difficulty.toLowerCase()) {
+    case "low":
+      return "text-emerald-600";
+    case "medium":
+      return "text-amber-600";
+    case "high":
+      return "text-rose-600";
+    default:
+      return "text-zinc-600";
+  }
+};
+
 
 
 export type Topic = {
@@ -42,7 +54,7 @@ export type Topic = {
   description: string
   steps?: string[];
   businessValue: string
-  tags: ProjectTag[]
+  tags: string[]
   metrics: ImpactMetric[]
   technologies: string[],
   challenges: string[]
@@ -52,9 +64,4 @@ export type Topic = {
 export type ImpactMetric = {
   description: string
   type: string
-}
-
-export type ProjectTag = {
-  text: string
-  color: string
 }

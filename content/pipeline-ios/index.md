@@ -1,93 +1,70 @@
-### Continuous Integration and Continuous Deployment  
-  Automated pipelines accelerate the process of testing, building, and deploying code changes. Using GitHub Actions, teams can create workflows that automatically run tests, build applications, and deploy to production environments whenever code is pushed to the repository.  
-    
-  Lets say we have a React application. To run our application, we run the commands:
-  ~~~sh
-    npm install
-    npm test
-    npm run build
-    npm run dev
+## Fully automated delivery to the App Store and Google Play
 
-  ~~~
+In this document, we will deliver our [geolocation mobile application](/topic/capacitor-intro) using Ruby with Match and Fastlane.
 
-  These scripts build our code and serve the content to a location available to us. Here's the equivalent yaml configuration:
-  ~~~yml
-    name: Deploy NPM
+## Table of Contents
+### iOS
+- [Manual Delivery](#ios-manual-delivery)
+- [CI/CD Setup](#ios-pipeline-setup)
+- [Match](#ios-match)
 
-    on:
-      ...
-
-    jobs:
-      build-and-test:
-        runs-on: ubuntu-latest
-
-        steps:
-          ...
-
-          - name: Set up Node.js
-            uses: actions/setup-node@v4
-            with:
-              node-version: 22
-
-          - name: Install dependencies
-            run: npm install
-
-          - name: Run tests
-            run: npm test
-
-          - name: Build project
-            run: npm run build
+### Android
+- [Manual Delivery](#android-manual-delivery)
+- [CI/CD Setup](#android-pipeline-setup)
 
 
+## iOS
+### Manual Delivery <a id="ios-manual-delivery"></a>
 
-  ~~~
 
-  The result is a ubuntu image which has our application downloaded and built.
+To run an iOS simulator, you must have a MacOS system. Otherwise, you may skip directly to [CI/CD setup](#ios-pipeline-setup).
 
-  Ubuntu is most common, but you may use whichever platform is best for your application. For example: checkout [my automated CI/CD for full iOS delivery](./capacitor-plugin).
+The preferred way to install fastlane is via [Homebrew](https://brew.sh). This will also install a version of Ruby compatible with Fastlane.
+> Note: MacOS systems ship with Ruby, however you will still need a version of Ruby separate from your system version. 
 
-  Next step is running the image to create our container. This will vary depending on your target.
-  Create your repository secrets and environment. Then deploy with: 
-  
-  ### AWS
-  ~~~yml
-   - name: Deploy to S3
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: \${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: \${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+~~~ shell 
+brew install fastlane   # install fastlane CLI
+cd your/ios/app
+fastlane init           # Create your fastlane config 
+~~~
 
-      - name: Sync build folder
-        run: aws s3 sync dist/ s3://your-bucket-name --delete
+If this is your first time deploying an app to App Store Connect, you must run the init command with your company name set as an environment variable like so: 
 
-  ~~~
+~~~ shell
+PRODUCE_COMPANY_NAME="Dunder Mifflin" fastlane init  
+~~~
 
-  ### Azure
-  ~~~yml
-     - name: Deploy to Azure
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: \${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: \${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+The init command will encourage you to set up with one automation task. Pick the option "Automate App Store distribution"    
 
-  ~~~  
+Fastlane will use your existing Xcode project schema to build. When the build completes, you will be prompted to enter your Apple ID developer credentials. If you do not have an Apple ID, you can create one [here](https://account.apple.com/account).
 
-  ### Docker
-  ~~~yml
-      - name: Build Docker image
-        run: docker build -t myapp .
+After authenticating with your Apple ID, Fastlane will create a new App ID on the [Apple Developer Portal](https://developer.apple.com) for you if one does not match your apps bundle identifier. Confirm this option and enter your application display name when prompted.
 
-      - name: Push to Docker Hub
-        run: |
-          echo "\${{ secrets.DOCKER_PASSWORD }}" | docker login -u "\${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          docker tag myapp username/myapp:latest
-          docker push username/myapp:latest
+Next, you will be prompted to create the App in [App Store Connect](https://appstoreconnect.apple.com). Confirm the prompts and enter the same display name from the previous step.
 
-  ~~~  
+Finally, you will be asked to use fastlane to manage your applications metadata. This is not mandatory, but makes delivery significantly smoother.
 
-  Some platfroms like [Vercel](https://vercel.com/docs/deployments) & [Railway](https://docs.railway.com/overview/advanced-concepts) have built-in CI/CD.
-  
-  **Important**: Keep your secrets **secured**. Reference secret keys *only through repository secrets*.
+We now have a <code>fastlane</code> directory. Lets take a look at the contained <code>FastFile</code>:
 
-  
+~~~ ruby
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new release build to the App Store"
+  lane :release do
+    increment_build_number(xcodeproj: "App.xcodeproj")
+    build_app(scheme: "App")
+    upload_to_app_store
+  end
+end
+~~~
+
+## Android
+### Manual Delivery <a id="android-manual-delivery"></a>
+
+Ensure [Android Studio](https://developer.android.com/studio) is installed before following these instructions.
+
+

@@ -24,7 +24,7 @@ export default async function Header() {
           </Link>
 
           <a
-            href="https://github.com/YOUR_GITHUB_USERNAME"
+            href="https://github.com/owenlaurence/portfolio"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 hover:text-blue-600 transition"
