@@ -13,10 +13,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-50 to-zinc-200 pt-10">
-      
-      {topics ? <Topics topics={topics} />
-              : <span>Loading...</span>}
-      
+       <Topics topics={topics} />
       
     </div>
   );
